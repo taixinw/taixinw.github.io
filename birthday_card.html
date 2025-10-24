@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生日快乐，菊菊 (Jenny)！</title>
+  
+  <!-- 引入外部资源 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/prefixfree@1.0.7/prefixfree.min.js"></script>
+  
+  <!-- Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FF6B8B', // 粉色主色调
+            secondary: '#FFD700', // 金色辅助色
+            accent: '#9370DB', // 紫色强调色
+            milk: '#F5E8C8', // 奶茶色
+            milkDark: '#E6D2B5', // 深奶茶色
+            dark: '#5A3D5C', // 深色文本
+          },
+          fontFamily: {
+            cute: ['"Comic Sans MS"', '"Bubblegum Sans"', 'cursive'],
+            title: ['"Montserrat"', 'sans-serif'],
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { textShadow: '0 0 10px rgba(255, 107, 139, 0.7), 0 0 20px rgba(255, 107, 139, 0.5)' },
+            },
+            fadeInUp: {
+              '0%': { opacity: 0; transform: 'translateY(30px)' },
+              '100%': { opacity: 1; transform: 'translateY(0)' },
+            },
+            floatAway: {
+              '0%': { transform: 'translateY(0) rotate(0deg)' },
+              '100%': { transform: 'translateY(-100vh) rotate(360deg)' },
+            },
+            bgShift: {
+              '0%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+              '100%': { backgroundPosition: '0% 50%' },
+            },
+            sparkle: {
+              '0%, 100%': { opacity: 0; transform: 'scale(0.5)' },
+              '50%': { opacity: 1; transform: 'scale(1.2)' },
+            },
+            bounceIn: {
+              '0%': { transform: 'scale(0.3)', opacity: 0 },
+              '50%': { transform: 'scale(1.05)', opacity: 1 },
+              '70%': { transform: 'scale(0.9)' },
+              '100%': { transform: 'scale(1)' },
+            },
+            glowPulse: {
+              '0%, 100%': { boxShadow: '0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4)' },
+              '50%': { boxShadow: '0 0 30px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.6), 0 0 50px rgba(255, 215, 0, 0.4)' },
+            },
+          },
+          animation: {
+            float: 'float 3s ease-in-out infinite',
+            pulseGlow: 'pulseGlow 2s ease-in-out infinite',
+            fadeInUp: 'fadeInUp 0.8s ease-out forwards',
+            floatAway: 'floatAway 8s ease-in-out forwards',
+            bgShift: 'bgShift 15s ease infinite',
+            sparkle: 'sparkle 2s ease-in-out infinite',
+            bounceIn: 'bounceIn 0.6s ease-out forwards',
+            glowPulse: 'glowPulse 2s ease-in-out infinite',
+          },
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .text-glow-yellow {
+        text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+      }
+      .bg-soft-gradient {
+        background: linear-gradient(135deg, #FFF9F2, #FFF0E6, #FFF9F2);
+        background-size: 400% 400%;
+        animation: bgShift 15s ease infinite;
+      }
+      .image-highlight {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1), 0 0 0 4px white;
+      }
+      .bg-gradient-animated {
+        background: linear-gradient(135deg, #fffbf5, #fff3e6, #fffbf5);
+        background-size: 400% 400%;
+        animation: bgShift 15s ease infinite;
+      }
+    }
+  </style>
+  
+  <style>
+    /* 基础样式与浏览器兼容 */
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      /* 添加更女性化的背景色调 */
+      background: linear-gradient(135deg, #FFF5F7, #FFF0F5, #FFF5F7);
+    }
+    
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .slide.active {
+      opacity: 1;
+    }
+    
+    .slide-content {
+      max-width: 800px;
+      text-align: center;
+      z-index: 10;
+    }
+    
+    .next-btn {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #FF6B8B;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255,107,139,0.5);
+      transition: all 0.3s ease;
+      z-index: 20;
+    }
+    
+    .next-btn:hover {
+      transform: translateX(-50%) scale(1.1);
+      box-shadow: 0 6px 20px rgba(255,107,139,0.7);
+    }
+    
+    /* 背景粒子 */
+    .bg-particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    
+    /* 奶茶特效 */
+    .milk-tea {
+      position: relative;
+      width: 180px;
+      height: 280px;
+      margin: 2rem auto;
+      z-index: 5;
+    }
+    
+    .tea-cup {
+      width: 180px;
+      height: 220px;
+      background-color: #F5E8C8;
+      border-radius: 15px 15px 30px 30px;
+      position: relative;
+      box-shadow: inset -10px -5px 0 rgba(0,0,0,0.05);
+    }
+    
+    .tea-liquid {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80%;
+      background-color: #A67C52;
+      border-radius: 0 0 30px 30px;
+      transition: height 1s ease;
+    }
+    
+    .tea-top {
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      width: 160px;
+      height: 30px;
+      background-color: #D4B59E;
+      border-radius: 50%;
+    }
+    
+    .tea-handle {
+      position: absolute;
+      top: 40px;
+      right: -30px;
+      width: 60px;
+      height: 100px;
+      border: 15px solid #F5E8C8;
+      border-left: none;
+      border-radius: 0 40px 40px 0;
+    }
+    
+    .tea-bubble {
+      position: absolute;
+      background-color: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      animation: float 3s infinite;
+    }
+    
+    .tea-steam {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      width: 60px;
+      height: 60px;
+      transform: translateX(-50%);
+      opacity: 0.6;
+    }
+    
+    .steam-particle {
+      position: absolute;
+      background-color: rgba(255,255,255,0.7);
+      border-radius: 50%;
+      animation: floatAway 4s ease-in-out infinite;
+    }
+    
+    /* 星光特效 */
+    .star {
+      position: absolute;
+      background-color: #FFD700;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation: twinkle 2s infinite alternate;
+    }
+    
+    @keyframes twinkle {
+      from { transform: scale(0.8); opacity: 0.7; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
+    /* 黄色光点特效 */
+    .yellow-spot {
+      position: absolute;
+      background-color: rgba(255, 215, 0, 0.5);
+      border-radius: 50%;
+      filter: blur(20px);
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    /* 小确幸元素 */
+    .blessing-item {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0.8rem;
+      padding: 0.8rem;
+      border-radius: 12px;
+      background-color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+      animation: bounceIn 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    
+    .blessing-item:hover {
+      transform: translateY(-5px) scale(1.05);
+    }
+    
+    .blessing-label {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      color: #5A3D5C;
+      font-weight: 500;
+    }
+    
+    /* 蜡烛样式 */
+    .candle {
+      position: relative;
+      width: 12px;
+      height: 45px;
+      background: linear-gradient(to right, #FFE4E1, #FFFFFF, #FFE4E1);
+      border-radius: 3px 3px 0 0;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    
+    .candle-wick {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 8px;
+      background-color: #333;
+    }
+    
+    .candle-flame {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 20px;
+      background: radial-gradient(circle, #FFD700, #FFA500);
+      border-radius: 50% 50% 30% 30%;
+      box-shadow: 0 0 15px #FFD700, 0 0 20px rgba(255, 165, 0, 0.6);
+      opacity: 0;
+      animation: float 0.5s ease-in-out infinite;
+    }
+    
+    /* 蜡烛粒子特效 */
+    .candle-particle {
+      position: absolute;
+      background-color: #FFD700;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    
+    /* 礼物盒样式 */
+    .big-gift {
+      width: 90%;
+      max-width: 600px;
+      height: 500px;
+      position: relative;
+      margin: 2rem auto;
+      cursor: pointer;
+    }
+    
+    .gift-bottom {
+      width: 100%;
+      height: 100%;
+      background-color: #9370DB;
+      border-radius: 15px;
+      position: relative;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .gift-top {
+      position: absolute;
+      top: -60px;
+      left: 10%;
+      width: 80%;
+      height: 70px;
+      background-color: #FF6B8B;
+      border-radius: 10px;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 -5px 10px rgba(0,0,0,0.1);
+    }
+    
+    .gift-ribbon-x {
+      position: absolute;
+      width: 100%;
+      height: 20%;
+      background-color: #FFD700;
+      top: 40%;
+    }
+    
+    .gift-ribbon-y {
+      position: absolute;
+      width: 20%;
+      height: 100%;
+      background-color: #FFD700;
+      left: 40%;
+    }
+    
+    .gift-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      transform: scale(0.8);
+    }
+    
+    .gift-opened .gift-top {
+      transform: translateY(-200px) rotateX(180deg);
+    }
+    
+    .gift-opened .gift-content {
+        opacity: 1;
+        transform: scale(1);
+        transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s;
+      }
+      
+      /* 打开礼物时图片的动画效果 */
+      .gift-opened .gift-content img {
+        animation: bounceIn 1s ease-out forwards,
+                   scaleUp 0.5s ease-out 0.3s forwards;
+        transform-origin: center center;
+      }
+      
+      @keyframes scaleUp {
+        0% { transform: scale(0.8); }
+        100% { transform: scale(1); }
+      }
+    
+    /* 礼物打开特效 */
+    .gift-sparkle {
+      position: absolute;
+      background-color: #FFD700;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: sparkle 0.8s ease-out forwards;
+    }
+    
+    .gift-confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      animation: floatAway 6s ease-in-out forwards;
+    }
+    
+    /* 互动元素 */
+    .interactive-element {
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+    
+    .interactive-element:hover {
+      transform: scale(1.2) rotate(5deg);
+    }
+    
+    /* 太阳装饰 */
+    .sun {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, #FFD700 0%, #FFA500 100%);
+      border-radius: 50%;
+      margin: 2rem auto;
+      box-shadow: 0 0 50px #FFD700, 0 0 70px rgba(255, 165, 0, 0.6);
+      position: relative;
+      animation: pulse 3s infinite alternate;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+    
+    .sun-ray {
+      position: absolute;
+      width: 25px;
+      height: 80px;
+      background-color: #FFD700;
+      left: 50%;
+      top: 50%;
+      transform-origin: center bottom;
+    }
+    
+    /* 装饰性元素 */
+    .decor {
+      position: absolute;
+      pointer-events: none;
+    }
+    
+    /* 文字动画容器 */
+    .text-animation-container {
+      position: relative;
+      padding: 2rem;
+      border-radius: 20px;
+      background-color: rgba(255,255,255,0.8);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    /* 定制名称弹窗 */
+    #name-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .modal-content {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 90%;
+      width: 400px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    
+    .modal-content input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 1rem 0;
+      border: 2px solid #FF6B8B;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    
+    .modal-content button {
+      background-color: #FF6B8B;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .modal-content button:hover {
+      background-color: #FF5273;
+      transform: scale(1.05);
+    }
+    
+    /* 移动端优化 */
+    @media (max-width: 640px) {
+      .slide {
+        padding: 1rem;
+      }
+      
+      .next-btn {
+        bottom: 1.5rem;
+        width: 50px;
+        height: 50px;
+      }
+      
+      .milk-tea {
+        width: 140px;
+        height: 220px;
+      }
+      
+      .tea-cup {
+        width: 140px;
+        height: 180px;
+      }
+      
+      .tea-handle {
+        right: -25px;
+        width: 50px;
+        height: 80px;
+        border-width: 12px;
+      }
+      
+      .sun {
+        width: 160px;
+        height: 160px;
+      }
+      
+      .sun-ray {
+        width: 20px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body class="font-cute">
+
+
+  <!-- 第一页：封面页（蛋糕动图） -->
+  <div class="slide active bg-gradient-animated" data-slide="1">
+    <!-- 背景装饰 -->
+    <div class="decor absolute top-10 left-10 text-primary text-5xl animate-float"><i class="fa fa-balloon"></i></div>
+    <div class="decor absolute top-20 right-10 text-accent text-4xl animate-float" style="animation-delay: 0.5s;"><i class="fa fa-gift"></i></div>
+    <div class="decor absolute bottom-20 left-10 text-secondary text-5xl animate-float" style="animation-delay: 0.3s;"><i class="fa fa-star"></i></div>
+    <div class="decor absolute bottom-40 right-20 text-primary text-4xl animate-float" style="animation-delay: 0.7s;"><i class="fa fa-heart"></i></div>
+    
+    <div class="slide-content">
+      <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold text-primary mb-6 animate-pulseGlow leading-tight font-title">
+        Happy Birthday,<br><span id="birthday-name">亲爱的 Jenny</span>!
+      </h1>
+      
+      <!-- 静态蛋糕图片 -->
+      <div class="w-72 h-72 mx-auto my-8 relative animate-float image-highlight">
+        <img src="https://images.unsplash.com/photo-1589782182703-2aaa69037b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="生日蛋糕" class="w-full h-full object-contain rounded-full">
+        
+        <!-- 蛋糕周围的动态光点 -->
+        <div class="yellow-spot w-20 h-20 top-10 left-10" style="animation-delay: 0s;"></div>
+        <div class="yellow-spot w-16 h-16 bottom-10 right-10" style="animation-delay: 0.5s;"></div>
+        <div class="yellow-spot w-12 h-12 top-40 left-20" style="animation-delay: 1s;"></div>
+      </div>
+      
+      <p class="text-[clamp(1.2rem,4vw,1.8rem)] text-dark font-medium animate-fadeInUp" style="animation-delay: 0.5s;">
+        愿今天充满爱与欢笑
+      </p>
+    </div>
+    <button class="next-btn">
+      <i class="fa fa-arrow-down text-xl"></i>
+    </button>
+  </div>
+  
+  <!-- 第二页：奶茶祝福 -->
+  <div class="slide bg-soft-gradient" data-slide="2">
+    <!-- 柔和的奶茶主题背景粒子 -->
+    <div class="bg-particle" style="width: 20px; height: 20px; background-color: #E6D2B5; top: 20%; left: 10%; animation: float 6s infinite;"></div>
+    <div class="bg-particle" style="width: 15px; height: 15px; background-color: #D4B59E; top: 60%; left: 80%; animation: float 7s infinite 0.5s;"></div>
+    <div class="bg-particle" style="width: 25px; height: 25px; background-color: #F5E8C8; top: 40%; left: 90%; animation: float 5s infinite 1s;"></div>
+    <div class="bg-particle" style="width: 18px; height: 18px; background-color: #E6D2B5; top: 80%; left: 20%; animation: float 8s infinite 1.5s;"></div>
+    
+    <div class="slide-content">
+      <p class="text-[clamp(1.5rem,5vw,3rem)] text-dark mb-8 animate-fadeInUp font-medium">
+        愿你这一年既能把日子过成<span class="text-primary font-bold">甜甜的奶茶</span>
+      </p>
+      
+      <div class="milk-tea animate-float">
+        <div class="tea-cup">
+          <div class="tea-liquid"></div>
+          <div class="tea-top"></div>
+          <div class="tea-handle"></div>
+          <div class="tea-steam" id="tea-steam"></div>
+        </div>
+      </div>
+    </div>
+    <button class="next-btn">
+      <i class="fa fa-arrow-down text-xl"></i>
+    </button>
+  </div>
+  
+  <!-- 第三页：眼里有光 -->
+  <div class="slide bg-gradient-animated" data-slide="3">
+    <!-- 黄色光点背景（自动触发） -->
+    <div id="yellow-spots-container" class="absolute inset-0"></div>
+    
+    <div class="slide-content">
+      <p class="text-[clamp(1.5rem,5vw,3rem)] text-dark mb-12 animate-fadeInUp font-medium">
+        也能在追逐热爱时<span class="text-secondary font-bold interactive-element text-glow-yellow">眼里有光</span>
+      </p>
+      
+      <!-- 星光主题图片 -->
+      <div class="w-80 h-80 mx-auto relative image-highlight animate-glowPulse">
+        <img src="https://picsum.photos/seed/lightinyes/400/400" alt="眼里有光" class="w-full h-full object-cover rounded-full shadow-lg">
+        
+        <!-- 黄色动态星光（自动触发） -->
+        <div class="star absolute" style="width: 15px; height: 15px; top: 20%; left: 50%; animation: twinkle 2s infinite 0s;"></div>
+        <div class="star absolute" style="width: 10px; height: 10px; top: 40%; left: 80%; animation: twinkle 2s infinite 0.3s;"></div>
+        <div class="star absolute" style="width: 12px; height: 12px; top: 70%; left: 60%; animation: twinkle 2s infinite 0.6s;"></div>
+        <div class="star absolute" style="width: 8px; height: 8px; top: 60%; left: 20%; animation: twinkle 2s infinite 0.9s;"></div>
+        <div class="star absolute" style="width: 14px; height: 14px; top: 30%; left: 30%; animation: twinkle 2s infinite 1.2s;"></div>
+      </div>
+    </div>
+    <button class="next-btn">
+      <i class="fa fa-arrow-down text-xl"></i>
+    </button>
+  </div>
+  
+  <!-- 第四页：小确幸 -->
+  <div class="slide bg-gradient-animated" data-slide="4">
+    <div class="slide-content">
+      <p class="text-[clamp(1.5rem,5vw,3rem)] text-dark mb-10 animate-fadeInUp font-medium">
+        愿每个平凡的日子都闪着<span class="text-primary font-bold">小确幸</span>
+      </p>
+      
+      <!-- 小确幸项目 -->
+      <div class="flex flex-wrap justify-center p-4">
+        <div class="blessing-item" style="animation-delay: 0.2s;">
+          <i class="fa fa-coffee text-5xl text-accent"></i>
+          <span class="blessing-label">一杯好咖啡</span>
+        </div>
+        <div class="blessing-item" style="animation-delay: 0.4s;">
+          <i class="fa fa-book text-5xl text-primary"></i>
+          <span class="blessing-label">一本好书</span>
+        </div>
+        <div class="blessing-item" style="animation-delay: 0.6s;">
+          <i class="fa fa-music text-5xl text-secondary"></i>
+          <span class="blessing-label">喜欢的歌</span>
+        </div>
+        <div class="blessing-item" style="animation-delay: 0.8s;">
+          <i class="fa fa-film text-5xl text-accent"></i>
+          <span class="blessing-label">精彩电影</span>
+        </div>
+        <div class="blessing-item" style="animation-delay: 1s;">
+          <i class="fa fa-leaf text-5xl text-primary"></i>
+          <span class="blessing-label">自然风景</span>
+        </div>
+        <div class="blessing-item" style="animation-delay: 1.2s;">
+          <i class="fa fa-smile-o text-5xl text-secondary"></i>
+          <span class="blessing-label">暖心微笑</span>
+        </div>
+      </div>
+    </div>
+    <button class="next-btn">
+      <i class="fa fa-arrow-down text-xl"></i>
+    </button>
+  </div>
+  
+  <!-- 第五页：难过时有人陪 -->
+  <div class="slide bg-gradient-animated" data-slide="5">
+    <!-- 陪伴符号装饰 -->
+    <div class="decor text-primary/30 text-6xl absolute top-1/4 left-1/6 animate-float">
+      <i class="fa fa-heart"></i>
+    </div>
+    <div class="decor text-accent/30 text-5xl absolute bottom-1/3 right-1/6 animate-float" style="animation-delay: 0.5s;">
+      <i class="fa fa-handshake-o"></i>
+    </div>
+    
+    <div class="slide-content">
+      <div class="text-animation-container">
+        <p class="text-[clamp(2rem,7vw,3.5rem)] text-dark animate-fadeInUp font-medium leading-tight">
+          难过时有人陪
+        </p>
+        <p class="text-[clamp(1.2rem,4vw,1.8rem)] text-dark/80 mt-6 animate-fadeInUp" style="animation-delay: 0.5s;">
+          有依靠的肩膀，有倾听的耳朵<br>
+          所有委屈都有人懂
+        </p>
+      </div>
+    </div>
+    <button class="next-btn">
+      <i class="fa fa-arrow-down text-xl"></i>
+    </button>
+  </div>
+  
+  <!-- 第六页：快乐时有人分享 -->
+  <div class="slide bg-gradient-animated" data-slide="6">
+    <!-- 快乐符号装饰 -->
+    <div class="decor text-secondary/30 text-6xl absolute top-1/3 right-1/5 animate-float">
+      <i class="fa fa-smile-o"></i>
+    </div>
+    <div class="decor text-primary/30 text-5xl absolute bottom-1/4 left-1/5 animate-float" style="animation-delay: 0.7s;">
+      <i class="fa fa-glass"></i>
+    </div>
+    
+    <div class="slide-content">
+      <div class="text-animation-container">
+        <p class="text-[clamp(2rem,7vw,3.5rem)] text-dark animate-fadeInUp font-medium leading-tight">
+          快乐时有人分享
+        </p>
+        <p class="text-[clamp(1.2rem,4vw,1.8rem)] text-dark/80 mt-6 animate-fadeInUp" style="animation-delay: 0.5s;">
+          喜悦因分享而加倍<br>
+          美好时刻有人一同珍藏
+        </p>
+      </div>
+    </div>
+    <button class="next-btn">
+      <i class="fa fa-arrow-down text-xl"></i>
+    </button>
+  </div>
+  
+  <!-- 第七页：小太阳 -->
+  <div class="slide bg-gradient-animated" data-slide="7">
+    <div class="slide-content">
+      <p class="text-[clamp(1.5rem,5vw,3rem)] text-dark mb-8 animate-fadeInUp font-medium">
+        新岁继续做被幸福包围的<span class="text-secondary font-bold interactive-element">小太阳</span>呀！
+      </p>
+      
+      <div class="sun image-highlight">
+        <div class="sun-ray" style="transform: translate(-50%, -100%) rotate(0deg);"></div>
+        <div class="sun-ray" style="transform: translate(-50%, -100%) rotate(45deg);"></div>
+        <div class="sun-ray" style="transform: translate(-50%, -100%) rotate(90deg);"></div>
+        <div class="sun-ray" style="transform: translate(-50%, -100%) rotate(135deg);"></div>
+        <div class="sun-ray" style="transform: translate(-50%, -100%) rotate(180deg);"></div>
+        <div class="sun-ray" style="transform: translate(-50%, -100%) rotate(225deg);"></div>
+        <div class="sun-ray" style="transform: translate(-50%, -100%) rotate(270deg);"></div>
+        <div class="sun-ray" style="transform: translate(-50%, -100%) rotate(315deg);"></div>
+      </div>
+    </div>
+    <button class="next-btn">
+      <i class="fa fa-arrow-down text-xl"></i>
+    </button>
+  </div>
+  
+  <!-- 第八页：点亮星光 -->
+  <div class="slide bg-gradient-animated" data-slide="8">
+    <div class="slide-content">
+      <h2 class="text-[clamp(1.5rem,5vw,2.5rem)] text-dark mb-12 animate-fadeInUp font-medium">
+        点亮属于你的星光
+      </h2>
+      
+      <!-- 星光主题图片 -->
+      <div class="w-96 h-96 mx-auto relative image-highlight">
+        <img src="https://picsum.photos/seed/birthdaystars/500/500" alt="生日星光" class="w-full h-full object-cover rounded-full shadow-xl">
+        
+        <!-- 蜡烛在图片上方 -->
+        <div class="absolute bottom-20 left-1/2 transform -translate-x-1/2">
+          <div class="candle">
+            <div class="candle-wick"></div>
+            <div id="flame" class="candle-flame"></div>
+          </div>
+        </div>
+      </div>
+      
+      <button id="light-candle-btn" class="mt-10 bg-secondary text-dark px-8 py-4 rounded-full text-lg font-medium shadow-lg hover:bg-opacity-90 transition transform hover:scale-105">
+        点燃蜡烛
+      </button>
+    </div>
+    <button class="next-btn">
+      <i class="fa fa-arrow-down text-xl"></i>
+    </button>
+  </div>
+  
+  <!-- 第九页：拆开你的专属惊喜 -->
+  <div class="slide bg-gradient-animated" data-slide="9">
+    <div class="slide-content">
+      <h2 class="text-[clamp(1.5rem,5vw,2.5rem)] text-dark mb-8 animate-fadeInUp font-medium">
+        拆开你的专属惊喜
+      </h2>
+      
+      <div id="big-gift" class="big-gift image-highlight">
+        <div class="gift-bottom">
+          <div class="gift-ribbon-x"></div>
+          <div class="gift-ribbon-y"></div>
+          <div class="gift-content">
+            <div class="text-center p-4">
+              <!-- 更换为上传的礼物图片 -->
+              <img src="Jenny.jpg" alt="生日惊喜图片" class="rounded-xl shadow-2xl max-h-72 max-w-full object-cover mx-auto">
+              <p class="mt-4 text-white text-2xl font-bold">生日快乐，亲爱的 Jenny！</p>
+            </div>
+          </div>
+        </div>
+        <div class="gift-top"></div>
+      </div>
+      
+      <button id="open-gift-btn" class="mt-12 bg-accent text-gray-800 font-bold px-12 py-6 rounded-full text-xl shadow-2xl hover:bg-opacity-90 transition transform hover:scale-105 z-50 relative">
+        打开礼物
+      </button>
+    </div>
+    <button class="next-btn mt-16" id="final-btn">
+      <i class="fa fa-heart text-xl"></i>
+    </button>
+  </div>
+  
+  <!-- 第十页：结束页 -->
+  <div class="slide bg-gradient-animated" data-slide="10">
+    <div class="slide-content">
+      <h2 class="text-[clamp(2rem,6vw,3.5rem)] text-primary font-bold mb-10 animate-fadeInUp">
+        生日快乐，<span id="final-name">亲爱的 Jenny</span>！
+      </h2>
+      
+      <p class="text-[clamp(1.2rem,4vw,2rem)] text-dark mb-12 animate-fadeInUp" style="animation-delay: 0.3s;">
+        愿你永远被爱与幸福包围
+      </p>
+      
+      <div class="flex justify-center space-x-6 mb-16">
+        <div class="animate-float" style="animation-delay: 0s;"><i class="fa fa-heart text-primary text-5xl"></i></div>
+        <div class="animate-float" style="animation-delay: 0.3s;"><i class="fa fa-gift text-accent text-5xl"></i></div>
+        <div class="animate-float" style="animation-delay: 0.6s;"><i class="fa fa-star text-secondary text-5xl"></i></div>
+        <div class="animate-float" style="animation-delay: 0.9s;"><i class="fa fa-diamond text-accent text-5xl"></i></div>
+      </div>
+      
+      <button id="share-btn" class="bg-primary hover:bg-primary/90 text-dark font-bold py-4 px-10 rounded-full text-lg transition flex items-center justify-center mx-auto shadow-lg transform hover:scale-105">
+        <i class="fa fa-share-alt mr-2"></i> 分享这份祝福
+      </button>
+    </div>
+  </div>
+  
+  <script>
+    // 设置固定的名字
+    function setFixedName() {
+      const name = '亲爱的 Jenny';
+      
+      // 更新贺卡中的名字
+      document.getElementById('birthday-name').textContent = name;
+      document.getElementById('final-name').textContent = name;
+      
+      // 更新页面标题
+      document.title = `生日快乐，${name}！`;
+    }
+    
+    // 创建奶茶蒸汽效果
+    function createTeaSteam() {
+      const steamContainer = document.getElementById('tea-steam');
+      if (!steamContainer) return;
+      
+      setInterval(() => {
+        const particle = document.createElement('div');
+        particle.classList.add('steam-particle');
+        
+        const size = Math.random() * 15 + 10;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 60 + 20}%`;
+        particle.style.bottom = '0';
+        particle.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        
+        steamContainer.appendChild(particle);
+        
+        setTimeout(() => {
+          particle.remove();
+        }, 5000);
+      }, 800);
+    }
+    
+    // 创建眼里有光页面的黄色动态光点（自动触发）
+    function createYellowSpots() {
+      const container = document.getElementById('yellow-spots-container');
+      if (!container) return;
+      
+      // 页面加载后自动触发
+      for (let i = 0; i < 20; i++) {
+        const spot = document.createElement('div');
+        spot.classList.add('yellow-spot');
+        
+        const size = Math.random() * 60 + 30;
+        spot.style.width = `${size}px`;
+        spot.style.height = `${size}px`;
+        spot.style.left = `${Math.random() * 100}%`;
+        spot.style.top = `${Math.random() * 100}%`;
+        spot.style.animationDuration = `${Math.random() * 6 + 4}s`;
+        spot.style.animationDelay = `${Math.random() * 3}s`;
+        
+        container.appendChild(spot);
+      }
+    }
+    
+    // 创建礼物打开特效
+    function createGiftEffects() {
+      const gift = document.getElementById('big-gift');
+      if (!gift) return;
+      
+      const rect = gift.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const colors = ['#FF6B8B', '#FFD700', '#9370DB', '#FFFFFF', '#FFA500'];
+      
+      // 闪光粒子
+      for (let i = 0; i < 150; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('gift-sparkle');
+        
+        const size = Math.random() * 10 + 3;
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 300 + 50;
+        const x = centerX + Math.cos(angle) * distance;
+        const y = centerY + Math.sin(angle) * distance;
+        
+        sparkle.style.width = `${size}px`;
+        sparkle.style.height = `${size}px`;
+        sparkle.style.left = `${x}px`;
+        sparkle.style.top = `${y}px`;
+        sparkle.style.animationDelay = `${Math.random() * 0.8}s`;
+        
+        document.body.appendChild(sparkle);
+        
+        setTimeout(() => {
+          sparkle.remove();
+        }, 2000);
+      }
+      
+      // 彩色纸屑
+      for (let i = 0; i < 200; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('gift-confetti');
+        
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 350 + 30;
+        const x = centerX + Math.cos(angle) * distance;
+        const y = centerY + Math.sin(angle) * distance;
+        
+        confetti.style.backgroundColor = color;
+        confetti.style.left = `${x}px`;
+        confetti.style.top = `${y}px`;
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confetti.style.animationDelay = `${Math.random() * 1}s`;
+        confetti.style.animationDuration = `${Math.random() * 4 + 6}s`;
+        
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => {
+          confetti.remove();
+        }, 8000);
+      }
+    }
+    
+    // 为所有页面创建背景粒子动效
+    function createBackgroundParticles() {
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach(slide => {
+        for (let i = 0; i < 30; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('bg-particle');
+          
+          const size = Math.random() * 15 + 5;
+          const colors = ['#FF6B8B', '#FFD700', '#9370DB', '#F5E8C8'];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.backgroundColor = color;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+          particle.style.animation = `float ${Math.random() * 6 + 4}s ease-in-out infinite`;
+          particle.style.animationDelay = `${Math.random() * 3}s`;
+          
+          slide.appendChild(particle);
+        }
+      });
+    }
+    
+    // 创建蜡烛粒子特效
+    function createCandleParticles() {
+      const candle = document.querySelector('.candle');
+      if (!candle) return;
+      
+      const rect = candle.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top;
+      
+      for (let i = 0; i < 80; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('candle-particle');
+        
+        const size = Math.random() * 6 + 1;
+        const color = i % 3 === 0 ? '#FF6B00' : (i % 3 === 1 ? '#FFD700' : '#FFA500');
+        const angle = (Math.random() * 60 - 30) * Math.PI / 180; // -30到30度
+        const speed = Math.random() * 7 + 3;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.backgroundColor = color;
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        particle.style.opacity = Math.random() * 0.8 + 0.2;
+        
+        document.body.appendChild(particle);
+        
+        // 粒子动画
+        let posX = x;
+        let posY = y;
+        
+        function updateParticle() {
+          posX += Math.cos(angle) * speed;
+          posY -= Math.sin(angle) * speed;
+          particle.style.left = `${posX}px`;
+          particle.style.top = `${posY}px`;
+          particle.style.opacity = parseFloat(particle.style.opacity) - 0.01;
+          
+          if (parseFloat(particle.style.opacity) > 0) {
+            requestAnimationFrame(updateParticle);
+          } else {
+            particle.remove();
+          }
+        }
+        
+        updateParticle();
+      }
+    }
+    
+    // 创建彩屑
+    function createConfetti() {
+      const colors = ['#FF6B8B', '#FFD700', '#9370DB', '#4ECDC4', '#FF8C42', '#FFFFFF'];
+      const container = document.body;
+      const count = 150;
+      
+      for (let i = 0; i < count; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('decor');
+        confetti.style.width = `${Math.random() * 10 + 5}px`;
+        confetti.style.height = `${Math.random() * 10 + 5}px`;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.top = `-${Math.random() * 50 + 10}px`;
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confetti.style.animation = `floatAway ${Math.random() * 5 + 5}s ease-in-out forwards`;
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+        
+        container.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 10000);
+      }
+    }
+    
+    // 增强的分享功能
+    function enhanceSharing() {
+      const shareBtn = document.getElementById('share-btn');
+      // 使用固定的名字信息
+      const nameInfo = '亲爱的 Jenny';
+      
+      // 尝试使用Web Share API
+      if (navigator.share) {
+        shareBtn.addEventListener('click', function() {
+          navigator.share({
+            title: `生日快乐，${nameInfo}！`,
+            text: `我为${nameInfo}准备了一份特别的生日祝福，快来看看吧！`,
+            url: window.location.href,
+          }).catch(error => {
+            console.log('Web Share API 不可用，尝试复制链接:', error);
+            copyLinkToClipboard();
+          });
+        });
+      } else {
+        // 降级到复制链接功能
+        copyLinkToClipboard();
+      }
+    }
+    
+    // 复制链接到剪贴板
+    function copyLinkToClipboard() {
+      const shareBtn = document.getElementById('share-btn');
+      
+      shareBtn.addEventListener('click', function() {
+        if (navigator.clipboard && window.isSecureContext) {
+          // 使用现代 Clipboard API
+          navigator.clipboard.writeText(window.location.href)
+            .then(() => {
+              showNotification('链接已复制到剪贴板，可以分享给朋友了！');
+            })
+            .catch(error => {
+              console.error('无法复制链接:', error);
+              fallbackCopyTextToClipboard();
+            });
+        } else {
+          // 降级到传统方法
+          fallbackCopyTextToClipboard();
+        }
+      });
+    }
+    
+    // 传统的复制文本方法
+    function fallbackCopyTextToClipboard() {
+      const textArea = document.createElement('textarea');
+      textArea.value = window.location.href;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        showNotification('链接已复制到剪贴板，可以分享给朋友了！');
+      } catch (err) {
+        console.error('复制失败:', err);
+        showNotification('请手动复制当前页面的链接进行分享。');
+      } finally {
+        document.body.removeChild(textArea);
+      }
+    }
+    
+    // 显示自定义通知
+    function showNotification(message) {
+      // 检查是否已存在通知元素
+      let notification = document.getElementById('custom-notification');
+      
+      if (!notification) {
+        // 创建通知元素
+        notification = document.createElement('div');
+        notification.id = 'custom-notification';
+        notification.style.position = 'fixed';
+        notification.style.bottom = '20px';
+        notification.style.left = '50%';
+        notification.style.transform = 'translateX(-50%)';
+        notification.style.backgroundColor = '#FF6B8B';
+        notification.style.color = 'white';
+        notification.style.padding = '10px 20px';
+        notification.style.borderRadius = '25px';
+        notification.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+        notification.style.zIndex = '1000';
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.3s ease';
+        document.body.appendChild(notification);
+      }
+      
+      // 设置通知内容
+      notification.textContent = message;
+      
+      // 显示通知
+      notification.style.opacity = '1';
+      
+      // 3秒后隐藏通知
+      setTimeout(() => {
+        notification.style.opacity = '0';
+      }, 3000);
+    }
+    
+    // 页面滚动检测
+    function setupScrollDetection() {
+      window.addEventListener('scroll', function() {
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach(slide => {
+          const rect = slide.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.6 && rect.bottom > window.innerHeight * 0.4) {
+            slide.classList.add('active');
+          }
+        });
+      });
+    }
+    
+    // 设置下一页按钮功能
+    function setupNextButtons() {
+      document.querySelectorAll('.next-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const currentSlide = this.closest('.slide');
+          const currentIndex = parseInt(currentSlide.getAttribute('data-slide'));
+          const totalSlides = document.querySelectorAll('.slide').length;
+          
+          if (currentIndex < totalSlides) {
+            const nextSlide = document.querySelector(`.slide[data-slide="${currentIndex + 1}"]`);
+            nextSlide.scrollIntoView({ behavior: 'smooth' });
+            
+            currentSlide.classList.remove('active');
+            setTimeout(() => {
+              nextSlide.classList.add('active');
+            }, 300);
+          }
+          
+          if (this.id === 'final-btn') {
+            createConfetti();
+          }
+        });
+      });
+    }
+    
+    // 设置蜡烛点燃功能
+    function setupCandleLighting() {
+      const lightBtn = document.getElementById('light-candle-btn');
+      if (lightBtn) {
+        lightBtn.addEventListener('click', function() {
+          const flame = document.getElementById('flame');
+          flame.style.opacity = '1';
+          
+          // 增强粒子效果
+          createCandleParticles();
+          const particleInterval = setInterval(createCandleParticles, 800);
+          
+          // 禁用按钮
+          this.disabled = true;
+          this.textContent = '蜡烛已点燃';
+          this.classList.add('bg-gray-400');
+          this.classList.remove('hover:scale-105', 'hover:bg-opacity-90');
+          
+          createConfetti();
+          
+          // 10秒后停止粒子效果
+          setTimeout(() => {
+            clearInterval(particleInterval);
+          }, 10000);
+        });
+      }
+    }
+    
+    // 设置打开礼物功能
+    function setupGiftOpening() {
+      const openBtn = document.getElementById('open-gift-btn');
+      if (openBtn) {
+        openBtn.addEventListener('click', function() {
+          const gift = document.getElementById('big-gift');
+          gift.classList.add('gift-opened');
+          
+          // 触发大范围特效
+          createGiftEffects();
+          
+          // 禁用按钮
+          this.disabled = true;
+          this.textContent = '礼物已打开';
+          this.classList.add('bg-gray-400');
+          this.classList.remove('hover:scale-105', 'hover:bg-opacity-90');
+        });
+      }
+    }
+    
+    // 初始化
+    function init() {
+      // 设置固定名字
+      setFixedName();
+      
+      // 设置各种功能
+      setupNextButtons();
+      setupCandleLighting();
+      setupGiftOpening();
+      enhanceSharing();
+      setupScrollDetection();
+      
+      // 创建背景效果
+      createBackgroundParticles();
+      createTeaSteam();
+      createYellowSpots();
+    }
+    
+    // 页面加载完成后初始化
+    window.addEventListener('load', init);
+  </script>
+</body>
+</html>
